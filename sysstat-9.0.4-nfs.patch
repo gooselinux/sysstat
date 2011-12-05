@@ -1,0 +1,28 @@
+diff -up sysstat-9.0.4/common.c.orig sysstat-9.0.4/common.c
+--- sysstat-9.0.4/common.c.orig	2009-12-10 09:48:07.158258512 -0500
++++ sysstat-9.0.4/common.c	2009-12-10 09:49:32.888299550 -0500
+@@ -275,7 +275,7 @@ int get_nfs_mount_nr(void)
+ {
+ 	FILE *fp;
+ 	char line[8192];
+-	char type_name[10];
++	char *type_name;
+ 	unsigned int nfs = 0;
+ 
+ 	if ((fp = fopen(NFSMOUNTSTATS, "r")) == NULL)
+@@ -285,12 +285,9 @@ int get_nfs_mount_nr(void)
+ 	while (fgets(line, 8192, fp) != NULL) {
+ 
+ 		if ((strstr(line, "mounted")) && (strstr(line, "on")) &&
+-		    (strstr(line, "with")) && (strstr(line, "fstype"))) {
+-	
+-			sscanf(strstr(line, "fstype") + 6, "%10s", type_name);
+-			if ((!strncmp(type_name, "nfs", 3)) && (strncmp(type_name, "nfsd", 4))) {
+-				nfs ++;
+-			}
++		    (strstr(line, "with fstype nfs")) &&
++		    !(strstr(line, "with fstype nfsd"))) {
++			nfs++;
+ 		}
+ 	}
+ 

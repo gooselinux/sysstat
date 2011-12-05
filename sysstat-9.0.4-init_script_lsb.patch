@@ -1,0 +1,21 @@
+diff -up sysstat-9.0.4/sysstat.in.lsb sysstat-9.0.4/sysstat.in
+--- sysstat-9.0.4/sysstat.in.lsb	2010-02-16 14:10:10.000000000 +0100
++++ sysstat-9.0.4/sysstat.in	2010-02-16 14:11:47.000000000 +0100
+@@ -5,12 +5,16 @@
+ # (C) 2000-2009 Sebastien Godard (sysstat <at> orange.fr)
+ #
+ ### BEGIN INIT INFO
++# Provides:             sysstat
++# Required-Start:
++# Required-Stop:
++# Default-Stop:
+ # Description: Reset the system activity logs
+ # Short-Description: reset the system activity logs
++### END INIT INFO
+ #@(#) @PACKAGE_NAME@-@PACKAGE_VERSION@ startup script:
+ #@(#)	 Insert a dummy record in current daily data file.
+ #@(#)	 This indicates that the counters have restarted from 0.
+-### END INIT INFO
+ 
+ RETVAL=0
+ SYSCONFIG_DIR=@SYSCONFIG_DIR@

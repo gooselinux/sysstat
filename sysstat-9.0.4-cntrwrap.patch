@@ -1,0 +1,23 @@
+diff -up sysstat-9.0.4/sa_common.c.pom sysstat-9.0.4/sa_common.c
+--- sysstat-9.0.4/sa_common.c.pom	2009-07-18 15:19:57.000000000 +0200
++++ sysstat-9.0.4/sa_common.c	2010-06-17 10:09:43.000000000 +0200
+@@ -634,13 +634,13 @@ int check_disk_reg(struct activity *a, i
+ 		    (sdc->minor == sdp->minor)) {
+ 			/*
+ 			 * Disk found.
+-			 * If a counter has decreased, then we may assume that the
+-			 * corresponding device was unregistered, then registered again.
+-			 * NB: AFAIK, such a device cannot be unregistered with current
+-			 * kernels.
++			 * If all the counters have decreased then the likelyhood
++			 * is that the disk has been unregistered and a new disk inserted.
++			 * If only one or two have decreased then the likelyhood
++			 * is that the counter has simply wrapped.
+ 			 */
+-			if ((sdc->nr_ios < sdp->nr_ios) ||
+-			    (sdc->rd_sect < sdp->rd_sect) ||
++			if ((sdc->nr_ios < sdp->nr_ios) &&
++			    (sdc->rd_sect < sdp->rd_sect) &&
+ 			    (sdc->wr_sect < sdp->wr_sect)) {
+ 
+ 				memset(sdp, 0, STATS_DISK_SIZE);

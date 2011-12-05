@@ -1,0 +1,38 @@
+diff -up sysstat-9.0.4/sysstat.in.ii sysstat-9.0.4/sysstat.in
+--- sysstat-9.0.4/sysstat.in.ii	2009-02-15 15:49:24.000000000 +0100
++++ sysstat-9.0.4/sysstat.in	2009-09-15 16:47:02.000000000 +0200
+@@ -4,11 +4,13 @@
+ # @INIT_DIR@/sysstat
+ # (C) 2000-2009 Sebastien Godard (sysstat <at> orange.fr)
+ #
++### BEGIN INIT INFO
+ # Description: Reset the system activity logs
++# Short-Description: reset the system activity logs
+ #@(#) @PACKAGE_NAME@-@PACKAGE_VERSION@ startup script:
+ #@(#)	 Insert a dummy record in current daily data file.
+ #@(#)	 This indicates that the counters have restarted from 0.
+-#
++### END INIT INFO
+ 
+ RETVAL=0
+ SYSCONFIG_DIR=@SYSCONFIG_DIR@
+@@ -27,15 +29,15 @@ case "$1" in
+ 	if [ -f "${exitCodeIndicator}" ]; then
+ 		rm -f ${exitCodeIndicator}
+ 	else
+-		RETVAL=1
++		RETVAL=2
+ 	fi
+ 	echo
+ 	;;
+-  stop|status|restart|reload)
++  stop|status|restart|reload|force-reload|condrestart|try-restart)
+ 	;;
+   *)
+-	echo "Usage: sysstat {start|stop|status|restart|reload}"
+-	exit 1
++	echo "Usage: sysstat {start|stop|status|restart|reload|force-reload|condrestart|try-restart}"
++	exit 2
+ esac
+ exit ${RETVAL}
+ 

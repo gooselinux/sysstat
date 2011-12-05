@@ -1,0 +1,26 @@
+diff -up sysstat-9.0.4/man/iostat.1.pom sysstat-9.0.4/man/iostat.1
+--- sysstat-9.0.4/man/iostat.1.pom	2009-04-16 18:01:06.000000000 +0200
++++ sysstat-9.0.4/man/iostat.1	2010-06-01 08:57:26.000000000 +0200
+@@ -293,7 +293,8 @@ the time spent servicing them.
+ .B svctm
+ .RS
+ The average service time (in milliseconds) for I/O requests that were issued
+-to the device.
++to the device. Warning! Do not trust this field any more. This field
++will be removed in a future sysstat version.
+ 
+ .RE
+ .B %util
+@@ -527,6 +528,12 @@ filesystem must be mounted for
+ to work.
+ 
+ Extended statistics are available only with post 2.5 kernels.
++
++The average service time (\fBsvctm\fR field) value is meaningless, as I/O statistics
++are calculated at block level, and we don't know when the disk driver starts to
++process a request. For this reason, this field will be removed in a future
++sysstat version.
++
+ .SH FILES
+ .I /proc/stat
+ contains system statistics.
