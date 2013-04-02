@@ -1,6 +1,6 @@
 Name: sysstat
 Version: 9.0.4
-Release: 11%{?dist}
+Release: 12%{?dist}.1
 Summary: The sar and iostat system monitoring commands
 License: GPLv2+
 Group: Applications/System
@@ -18,6 +18,8 @@ Patch4: sysstat-9.0.4-svctm.patch
 # fixes 600275 - The 'sar -d ' command outputs invalid data
 Patch5: sysstat-9.0.4-cntrwrap.patch
 Patch6: sysstat-9.0.6.1-sec.patch
+Patch7: sysstat-9.0.4-intr.patch
+Patch8: sysstat-9.0.4-cpu.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n) 
 
@@ -40,6 +42,8 @@ activity.
 %patch4 -p1 -b .svctm
 %patch5 -p1 -b .over
 %patch6 -p1 -b .sec
+%patch7 -p1 -b .intr
+%patch8 -p1 -b .cpu
 iconv -f windows-1252 -t utf8 CREDITS > CREDITS.aux
 mv CREDITS.aux CREDITS
 
@@ -91,6 +95,14 @@ rm -rf %{buildroot}
 %{_localstatedir}/log/sa
 
 %changelog
+* Wed Nov 10 2010 Ivana Hutarova Varekova <varekova@redhat.com> - 9.0.4-12.1
+- Resolves: #651813
+  mpstat problem with cpu_usr, cpu_guest values
+
+* Fri Nov  5 2010 Ivana Hutarova Varekova <varekova@redhat.com> - 9.0.4-11.1
+- Resolves: #650125
+  mpstat -I ALL displays incorrect values
+
 * Mon Jul 26 2010 Ivana Hutarova Varekova <varekova@redhat.com> - 9.0.4-11
 - Resolves: #615234
   sysstat not monitor system every second

@@ -1,0 +1,23 @@
+diff -up sysstat-9.0.4/rd_stats.c.pom sysstat-9.0.4/rd_stats.c
+--- sysstat-9.0.4/rd_stats.c.pom	2009-07-18 15:19:58.000000000 +0200
++++ sysstat-9.0.4/rd_stats.c	2010-11-05 09:27:15.000000000 +0100
+@@ -2312,6 +2312,7 @@ int get_irqcpu_nr(int max_nr_irqcpu, int
+ 	FILE *fp;
+ 	char *line = NULL;
+ 	unsigned int irq = 0;
++	int p;
+ 
+ 	if ((fp = fopen(INTERRUPTS, "r")) == NULL)
+ 		return 0;       /* No interrupts file */
+@@ -2320,8 +2321,10 @@ int get_irqcpu_nr(int max_nr_irqcpu, int
+ 
+ 	while ((fgets(line, INTERRUPTS_LINE + 11 * cpu_nr , fp) != NULL) &&
+ 	       (irq < max_nr_irqcpu)) {
+-		if (line[3] == ':')
++		p = strcspn(line, ":");
++		if ((p > 0) && (p < 8)) {
+ 			irq++;
++		}
+ 	}
+ 
+ 	fclose(fp);
